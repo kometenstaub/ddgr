@@ -1501,7 +1501,16 @@ class DdgCmd:
 
         if json_output:
             # JSON output
-            results_object = [r.jsonizable_object() for r in results]
+            ##
+            # variables renamed, JSON structure changed and instant_answer
+            # added by @kometenstaub on 2023-08-03,
+            # same license as original code applies (GPL-3; see LICENSE file)
+            json_result = [r.jsonizable_object() for r in results]
+            results_object = {
+                "results": json_result,
+                }
+            if self.instant_answer:
+                results_object["instant_answer"] = self.instant_answer
             print(json.dumps(results_object, indent=2, sort_keys=True, ensure_ascii=False))
         elif not results:
             print('No results.', file=sys.stderr)
